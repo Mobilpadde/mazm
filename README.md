@@ -1,7 +1,7 @@
 # mazm
 
 [![alt text](/static/yob.png)](/static/yob.webm)
-[![alt text](/static/yow.png)](/static/yob.webm)
+[![alt text](/static/yow.png)](/static/yow.webm)
 
 ## How to install
 

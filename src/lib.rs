@@ -170,24 +170,22 @@ impl Mazm {
         }
     }
 
-    pub fn new(dat: &[u8], sz: usize) -> Mazm {
-        let width = sz;
-        let height = sz;
+    pub fn new(dat: &[u8], w: usize, h: usize) -> Mazm {
+        let width = w;
+        let height = h;
 
         let mut cells: Vec<usize> = (0..(width * height))
             .map(|_| { Cell::Closed as usize })
             .collect();
 
-        let mut unvisited: Vec<usize> = (0..(width * height))
-            .map(|i| i)
-            .collect();
-
+        let mut unvisited: Vec<usize> = Vec::new();
         let mut selectables: Vec<usize> = Vec::new();
         let mut idx = 0;
         for i in 0..(width * height) {
-            if dat[idx + 0] as usize + dat[idx + 1] as usize + dat[idx + 2] as usize > (255 * 3) / 2 {
+            if dat[idx + 0] as usize + dat[idx + 1] as usize + dat[idx + 2] as usize > 127 * 3 {
                 cells[i] = Cell::Open as usize;
                 selectables.push(i);
+                unvisited.push(i);
             }
 
             idx += 4;

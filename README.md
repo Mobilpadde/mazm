@@ -6,8 +6,8 @@ Just another WASM maze-generator.
 
 Click on a `YO` to see a demo using that `YO`.
 
-<a href="/static/yob.gif"><img src="/static/yob.png" width="100"/></a>
-<a href="/static/yow.gif"><img src="/static/yow.png" width="100"/></a>
+<a href="/images/yob.gif"><img src="/images/yob.png" width="100"/></a>
+<a href="/images/yow.gif"><img src="/images/yow.png" width="100"/></a>
 
 ## Install
 

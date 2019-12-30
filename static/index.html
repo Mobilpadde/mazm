@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>mazm</title>
+    <style>
+      body {
+        font: 14px/0 monospace;
+        letter-spacing: 3px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+      }
+
+      i {
+        width: 10px;
+        height: 10px;
+        border: 1px solid #000;
+        display: inline-block;
+        margin: 0;
+        padding: 0;
+      }
+
+      i.closed {
+        background: #000;
+      }
+
+      i.t {
+        border-top-color: transparent;
+      }
+
+      i.l {
+        border-left-color: transparent;
+      }
+
+      i.r {
+        border-right-color: transparent;
+      }
+
+      i.b {
+        border-bottom-color: transparent;
+      }
+    </style>
+  </head>
+  <body>
+    <input type="file" id="img"/>
+    <div id="mazm"></div>
+    <script src="index.js"></script>
+  </body>
+</html>

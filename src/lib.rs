@@ -58,28 +58,44 @@ impl Mazm {
 
         if row > 0 {
             let idx = self.get_index(row-1, col);
-            if curr > idx && self.cells[idx] & Cell::Closed as usize == 0 && self.cells[idx] & (Cell::Linked as usize) == 0 {
+            if
+                curr > idx &&
+                self.cells[idx] & Cell::Closed as usize == 0 &&
+                self.cells[idx] & Cell::Linked as usize == 0
+            {
                 neighbours.push(idx);
             }
         }
 
         if col > 0 {
             let idx = self.get_index(row, col-1);
-            if curr > idx && self.cells[idx] & Cell::Closed as usize == 0 && self.cells[idx] & (Cell::Linked as usize) == 0 {
+            if
+                curr > idx &&
+                self.cells[idx] & Cell::Closed as usize == 0 &&
+                self.cells[idx] & Cell::Linked as usize == 0
+            {
                 neighbours.push(idx);
             }
         }
 
         if col + 1 < len {
             let idx = self.get_index(row, col+1);
-            if idx < len && self.cells[idx] & Cell::Closed as usize == 0 && self.cells[idx] & (Cell::Linked as usize) == 0 {
+            if
+                idx < len &&
+                self.cells[idx] & Cell::Closed as usize == 0 &&
+                self.cells[idx] & Cell::Linked as usize == 0
+            {
                 neighbours.push(idx);
             }
         }
 
         if row + 1 < len {
             let idx = self.get_index(row+1, col);
-            if idx < len && self.cells[idx] & Cell::Closed as usize == 0 && self.cells[idx] & (Cell::Linked as usize) == 0 {
+            if
+                idx < len &&
+                self.cells[idx] & Cell::Closed as usize == 0 &&
+                self.cells[idx] & Cell::Linked as usize == 0
+            {
                 neighbours.push(idx);
             }
         }
@@ -96,7 +112,7 @@ impl Mazm {
             self.cells[next] |= Cell::Bottom as usize;
 
             self.cells[curr] |= Cell::Linked as usize;
-            //self.cells[next] |= Cell::Linked as usize;
+            self.cells[next] |= Cell::Linked as usize;
         }
 
         if col > n_col {
@@ -104,7 +120,7 @@ impl Mazm {
             self.cells[next] |= Cell::Right as usize;
 
             self.cells[curr] |= Cell::Linked as usize;
-            //self.cells[next] |= Cell::Linked as usize;
+            self.cells[next] |= Cell::Linked as usize;
         }
 
         if col < n_col {
@@ -112,7 +128,7 @@ impl Mazm {
             self.cells[next] |= Cell::Left as usize;
 
             self.cells[curr] |= Cell::Linked as usize;
-            //self.cells[next] |= Cell::Linked as usize;
+            self.cells[next] |= Cell::Linked as usize;
         }
 
         if row < n_row {
@@ -120,7 +136,7 @@ impl Mazm {
             self.cells[next] |= Cell::Top as usize;
 
             self.cells[curr] |= Cell::Linked as usize;
-            //self.cells[next] |= Cell::Linked as usize;
+            self.cells[next] |= Cell::Linked as usize;
         }
     }
 
@@ -130,8 +146,6 @@ impl Mazm {
 
             if unvisited.len() > 0 {
                 let neighbour = unvisited[(js_sys::Math::random() * unvisited.len() as f64) as usize];
-                //self.unvisited.remove(neighbour);
-
                 self.link(self.current, neighbour);
                 self.current = neighbour;
             } else {
@@ -171,11 +185,7 @@ impl Mazm {
         let mut selectables: Vec<usize> = Vec::new();
         let mut idx = 0;
         for i in 0..(width * height) {
-            if 
-                dat[idx + 0] > 127 &&
-                dat[idx + 1] > 127 &&
-                dat[idx + 2] > 127
-            {
+            if dat[idx + 0] as usize + dat[idx + 1] as usize + dat[idx + 2] as usize > (255 * 3) / 2 {
                 cells[i] = Cell::Open as usize;
                 selectables.push(i);
             }

@@ -9,9 +9,11 @@ import("../pkg/index.js")
 
     function renderer() {
       pre.innerHTML = mazm.render();
-      mazm.tick(2**4);
-
-      frame = requestAnimationFrame(renderer);
+      const kill = mazm.tick(2**4);
+      
+      if (!kill)
+        frame = requestAnimationFrame(renderer);
+      else console.log("Ticks: %c%d", "color:greenyellow;", mazm.get_time_passed());
     }
 
     input.addEventListener("change", ({ target }) => {

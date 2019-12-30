@@ -140,8 +140,8 @@ impl Mazm {
         }
     }
 
-    fn recursive_backtracker(&mut self) {
-        if self.unvisited.len() > 0 { // self.current < self.width * self.height {
+    fn recursive_backtracker(&mut self) -> bool {
+        if self.unvisited.len() > 0 {
             let unvisited: Vec<usize> = self.get_neighbours(self.current);
 
             if unvisited.len() > 0 {
@@ -154,20 +154,12 @@ impl Mazm {
                     Some(x) => { self.current = x as usize; },
                     None => {},
                 }
-                //self.current = self.width * self.height;
-                
-                //for idx in 0..self.cells.len() {
-                    //let visited = self.get_neighbours(idx);
-
-                    //if visited.len() > 0 {
-                        //self.current = idx;
-                        //let neighbour = visited[(js_sys::Math::random() * visited.len() as f64) as usize];
-                        //self.link(self.current, neighbour);
-                        //break;
-                    //}
-                //}
             }
+
+            return false;
         }
+
+        true
     }
 
     pub fn new(dat: &[u8], w: usize, h: usize) -> Mazm {
@@ -182,7 +174,7 @@ impl Mazm {
         let mut selectables: Vec<usize> = Vec::new();
         let mut idx = 0;
         for i in 0..(width * height) {
-            if dat[idx + 0] as usize + dat[idx + 1] as usize + dat[idx + 2] as usize > 127 * 3 {
+            if (dat[idx + 0] as usize + dat[idx + 1] as usize + dat[idx + 2] as usize) > 127 * 3 {
                 cells[i] = Cell::Open as usize;
                 selectables.push(i);
                 unvisited.push(i);
@@ -202,12 +194,22 @@ impl Mazm {
         }
     }
 
-    pub fn tick(&mut self, spd: usize) {
+    pub fn tick(&mut self, spd: usize) -> bool{
+        let mut kill = false;
         for _ in 0..spd {
-            self.recursive_backtracker();
+            kill = self.recursive_backtracker();
+            
+            if kill {
+                break;
+            }
         }
 
-        self.time += spd; 
+        self.time += spd;
+        kill
+    }
+
+    pub fn get_time_passed(&self) -> usize {
+        self.time
     }
 
     pub fn render(&self) -> String {

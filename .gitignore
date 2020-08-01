@@ -1,5 +1,7 @@
-/node_modules
-/target
-/dist
-/pkg
-/wasm-pack.log
+node_modules
+target
+dist
+pkg
+.vercel
+
+wasm-pack.log

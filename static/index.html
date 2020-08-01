@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>mazm</title>
     <style>
       body {
@@ -50,10 +50,18 @@
       i.b {
         border-bottom-color: transparent;
       }
+
+      .flex {
+        display:flex;
+        flex-direction: row;
+      }
     </style>
   </head>
   <body>
-    <input type="file" id="img"/>
+    <div class"flex">
+      <input type="file" id="img" />
+      <input type="number" id="speed" min="0" value="1"/>
+    </div>
     <div id="mazm"></div>
     <script src="index.js"></script>
   </body>

@@ -2,18 +2,24 @@ import("../pkg/index.js")
   .then(({ Mazm }) => {
     const pre = document.getElementById("mazm");
     const input = document.getElementById("img");
-    const w = 2**6;
+    const speedElm = document.getElementById("speed");
+    const w = 64;
 
     let mazm;
     let frame;
+    let speed = 1;
 
     function renderer() {
       pre.innerHTML = mazm.render();
-      const kill = mazm.tick(2**4);
-      
-      if (!kill)
-        frame = requestAnimationFrame(renderer);
-      else console.log("Ticks: %c%d", "color:greenyellow;", mazm.get_time_passed());
+      const kill = mazm.tick(speed);
+
+      if (!kill) frame = requestAnimationFrame(renderer);
+      else
+        console.log(
+          "Ticks: %c%d",
+          "color:greenyellow;",
+          mazm.get_time_passed()
+        );
     }
 
     input.addEventListener("change", ({ target }) => {
@@ -37,8 +43,8 @@ import("../pkg/index.js")
 
             if (frame) {
               cancelAnimationFrame(frame);
-              mazm.free()
-            };
+              mazm.free();
+            }
             mazm = Mazm.new(dat, w, h);
             frame = requestAnimationFrame(renderer);
           });
@@ -50,5 +56,10 @@ import("../pkg/index.js")
         reader.readAsDataURL(target.files[0]);
       }
     });
+
+    speedElm.addEventListener(
+      "change",
+      ({ target }) => (speed = parseInt(target.value))
+    );
   })
   .catch(console.error);

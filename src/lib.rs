@@ -53,48 +53,44 @@ impl Mazm {
 
     fn get_neighbours(&self, curr: usize) -> Vec<usize> {
         let mut neighbours: Vec<usize> = Vec::new();
-        let (row, col) = self.get_row_col(curr); 
+        let (row, col) = self.get_row_col(curr);
         let len = self.cells.len();
 
         if row > 0 {
-            let idx = self.get_index(row-1, col);
-            if
-                curr > idx &&
-                self.cells[idx] & Cell::Closed as usize == 0 &&
-                self.cells[idx] & Cell::Linked as usize == 0
+            let idx = self.get_index(row - 1, col);
+            if curr > idx
+                && self.cells[idx] & Cell::Closed as usize == 0
+                && self.cells[idx] & Cell::Linked as usize == 0
             {
                 neighbours.push(idx);
             }
         }
 
         if col > 0 {
-            let idx = self.get_index(row, col-1);
-            if
-                curr > idx &&
-                self.cells[idx] & Cell::Closed as usize == 0 &&
-                self.cells[idx] & Cell::Linked as usize == 0
+            let idx = self.get_index(row, col - 1);
+            if curr > idx
+                && self.cells[idx] & Cell::Closed as usize == 0
+                && self.cells[idx] & Cell::Linked as usize == 0
             {
                 neighbours.push(idx);
             }
         }
 
         if col + 1 < len {
-            let idx = self.get_index(row, col+1);
-            if
-                idx < len &&
-                self.cells[idx] & Cell::Closed as usize == 0 &&
-                self.cells[idx] & Cell::Linked as usize == 0
+            let idx = self.get_index(row, col + 1);
+            if idx < len
+                && self.cells[idx] & Cell::Closed as usize == 0
+                && self.cells[idx] & Cell::Linked as usize == 0
             {
                 neighbours.push(idx);
             }
         }
 
         if row + 1 < len {
-            let idx = self.get_index(row+1, col);
-            if
-                idx < len &&
-                self.cells[idx] & Cell::Closed as usize == 0 &&
-                self.cells[idx] & Cell::Linked as usize == 0
+            let idx = self.get_index(row + 1, col);
+            if idx < len
+                && self.cells[idx] & Cell::Closed as usize == 0
+                && self.cells[idx] & Cell::Linked as usize == 0
             {
                 neighbours.push(idx);
             }
@@ -145,14 +141,17 @@ impl Mazm {
             let unvisited: Vec<usize> = self.get_neighbours(self.current);
 
             if unvisited.len() > 0 {
-                let neighbour = unvisited[(js_sys::Math::random() * unvisited.len() as f64) as usize];
+                let neighbour =
+                    unvisited[(js_sys::Math::random() * unvisited.len() as f64) as usize];
                 self.link(self.current, neighbour);
                 self.current = neighbour;
             } else {
                 let unv = self.unvisited.pop();
                 match unv {
-                    Some(x) => { self.current = x as usize; },
-                    None => {},
+                    Some(x) => {
+                        self.current = x as usize;
+                    }
+                    None => {}
                 }
             }
 
@@ -167,7 +166,7 @@ impl Mazm {
         let height = h;
 
         let mut cells: Vec<usize> = (0..(width * height))
-            .map(|_| { Cell::Closed as usize })
+            .map(|_| Cell::Closed as usize)
             .collect();
 
         let mut unvisited: Vec<usize> = Vec::new();
@@ -190,15 +189,15 @@ impl Mazm {
             time: 1,
             cells,
             unvisited,
-            current, 
+            current,
         }
     }
 
-    pub fn tick(&mut self, spd: usize) -> bool{
+    pub fn tick(&mut self, spd: usize) -> bool {
         let mut kill = false;
         for _ in 0..spd {
             kill = self.recursive_backtracker();
-            
+
             if kill {
                 break;
             }

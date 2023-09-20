@@ -1,7 +1,5 @@
 node_modules
 target
-dist
-pkg
-.vercel
+pkg/
 
 wasm-pack.log
